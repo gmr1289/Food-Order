@@ -2,25 +2,39 @@ import React, { useContext } from "react";
 import Modal from "../UI/Modal";
 import "./Cart.css";
 import CartContext from "../../store/CartContext";
+import CartItem from "./CartItem";
 
 const Cart = (props) => {
   const cartItems = useContext(CartContext);
-  const order = cartItems.total > 0 ? true : false;
+
+  const order = cartItems.total > 0;
+
   const amt = cartItems.total.toFixed(2);
+
+  const Itemadd = (item) => {
+    cartItems.addItem({ ...item, amount: 1 });
+  };
+
+  const Itemremove = (id) => {
+    cartItems.removeItem(id);
+  };
 
   return (
     <Modal>
-      <ol>
+      <ul className="cart-items">
         {cartItems.items.map((item) => {
           return (
-            <React.Fragment key={item.id}>
-              <li>
-                {item.name} amount : {item.amount} price :{item.price}
-              </li>
-            </React.Fragment>
+            <CartItem
+              key={item.id}
+              name={item.name}
+              amount={item.amount}
+              price={item.price}
+              onAdd={Itemadd.bind(null, item)}
+              onRemove={Itemremove.bind(null, item.id)}
+            />
           );
         })}
-      </ol>
+      </ul>
       <div className="total">
         <span>Total Amount</span>
 

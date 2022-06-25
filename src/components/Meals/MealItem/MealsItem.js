@@ -5,6 +5,7 @@ import CartContext from "../../../store/CartContext";
 
 const MealsItem = (props) => {
   const cartctx = useContext(CartContext);
+
   const CartUpdate = (amount) => {
     cartctx.addItem({
       id: props.id,
